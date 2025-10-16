@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="uk">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ксюша я тебе люблю ❤️</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            overflow: hidden;
+            height: 100vh;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        .container {
+            text-align: center;
+            z-index: 10;
+            padding: 1rem;
+            max-width: 90%;
+        }
+
+        h1 {
+            font-size: clamp(2rem, 8vw, 5rem);
+            color: white;
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.5),
+                0 0 40px rgba(255, 105, 180, 0.3);
+            animation: glow 2s ease-in-out infinite alternate;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+            word-wrap: break-word;
+        }
+
+        .subtitle {
+            font-size: clamp(1rem, 3vw, 1.5rem);
+            color: rgba(255, 255, 255, 0.9);
+            margin-top: 1rem;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        @keyframes glow {
+            from {
+                text-shadow: 0 0 20px rgba(255, 255, 255, 0.5),
+                    0 0 40px rgba(255, 105, 180, 0.3);
+            }
+
+            to {
+                text-shadow: 0 0 30px rgba(255, 255, 255, 0.8),
+                    0 0 60px rgba(255, 105, 180, 0.6);
+            }
+        }
+
+        .heart {
+            position: absolute;
+            font-size: clamp(1rem, 3vw, 2rem);
+            color: #ff69b4;
+            animation: float 6s ease-in-out infinite;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+
+            10% {
+                opacity: 1;
+            }
+
+            90% {
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(-100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .big-heart {
+            font-size: clamp(3rem, 10vw, 6rem);
+            animation: pulse 1.5s ease-in-out infinite;
+            margin: 1rem 0;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.1);
+            }
+        }
+
+        /* Tablet styles */
+        @media (max-width: 768px) {
+            .container {
+                padding: 1.5rem;
+            }
+
+            h1 {
+                margin-bottom: 0.75rem;
+            }
+
+            .big-heart {
+                margin: 0.75rem 0;
+            }
+        }
+
+        /* Mobile styles */
+        @media (max-width: 480px) {
+            body {
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            }
+
+            .container {
+                padding: 1rem;
+                max-width: 95%;
+            }
+
+            h1 {
+                margin-bottom: 0.5rem;
+            }
+
+            .big-heart {
+                margin: 0.5rem 0;
+            }
+
+            .subtitle {
+                margin-top: 0.75rem;
+            }
+        }
+
+        /* Landscape mobile */
+        @media (max-height: 500px) and (orientation: landscape) {
+            h1 {
+                font-size: clamp(1.5rem, 6vw, 3rem);
+            }
+
+            .big-heart {
+                font-size: clamp(2rem, 8vw, 4rem);
+            }
+
+            .subtitle {
+                font-size: clamp(0.875rem, 2.5vw, 1.25rem);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Катя</h1>
+        <div class="big-heart">❤️</div>
+        <h1>Я тебе люблю</h1>
+        <p class="subtitle">Ти слаба</p>
+    </div>
+
+    <script>
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.innerHTML = '❤️';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = (Math.random() * 3 + 4) + 's';
+            heart.style.animationDelay = Math.random() * 2 + 's';
+            document.body.appendChild(heart);
+
+            setTimeout(() => {
+                heart.remove();
+            }, 8000);
+        }
+
+        // Adjust heart creation frequency based on screen size
+        function getHeartInterval() {
+            if (window.innerWidth < 480) {
+                return 400; // Less frequent on mobile
+            } else if (window.innerWidth < 768) {
+                return 300; // Medium frequency on tablet
+            } else {
+                return 200; // More frequent on desktop
+            }
+        }
+
+        // Create hearts at adaptive intervals
+        let heartInterval = setInterval(createHeart, getHeartInterval());
+
+        // Update interval on resize
+        window.addEventListener('resize', () => {
+            clearInterval(heartInterval);
+            heartInterval = setInterval(createHeart, getHeartInterval());
+        });
+
+        // Create initial hearts
+        for (let i = 0; i < 5; i++) {
+            setTimeout(createHeart, i * 300);
+        }
+    </script>
+</body>
+
+</html>
